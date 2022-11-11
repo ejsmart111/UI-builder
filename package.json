@@ -12,10 +12,13 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^2.0.9",
     "core-js": "^3.8.3",
+    "document-register-element": "^1.14.10",
     "vue": "^2.6.14",
+    "vue-custom-element": "^3.3.0",
     "vue-drag-resize": "^1.5.4",
     "vuedraggable": "^2.24.3",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

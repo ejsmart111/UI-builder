@@ -89,11 +89,15 @@
 
  <script>
  import VueDragResize from 'vue-drag-resize';
+ import uiStore from '../uiStore'
 
  export default {
     props: {
        widgets: {
-          required: true
+          required: true,
+          default: () => {
+            return uiStore
+          }
        }
     },
     components: {
@@ -132,6 +136,12 @@
  </script>
 
  <style  scoped>
+   .box {
+      display: block;
+      margin: 0 auto;
+      max-width: 800px;
+      height: 100vh;
+   }
     .small {
        cursor: move;
        display:inline-block;
