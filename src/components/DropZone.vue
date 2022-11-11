@@ -1,5 +1,5 @@
 <template>
-   <div ref="box" class="box" width="100%" height="100%">
+   <div ref="box" id="box" class="box" width="100%" height="100%">
 
       <div class="canvas">
           <VueDragResize
