@@ -1,7 +1,7 @@
 <template>
    <div ref="box" id="box" class="box" width="100%" height="100%">
 
-      <div class="canvas">
+      <div ref="canvas" class="canvas">
           <VueDragResize
             v-for="widget in widgets"
             :key="widget.id"
@@ -115,6 +115,11 @@
          return widget => widget.isTransparent == 'true' ? 'transparent': widget.background
       },
     },
+    mounted() {
+      setTimeout(() => {
+         this.$refs.canvas.style.opacity = 1
+      }, 1000);
+    },
     methods: {
       resize(e,widget) {
          widget.width = e.width
@@ -169,6 +174,8 @@
     }
 
     .canvas {
-       position: absolute;
+      opacity: 0;
+      position: absolute;
+      transition: opacity 2s ease-in-out;;
     }
  </style>
