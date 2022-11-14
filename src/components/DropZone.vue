@@ -22,11 +22,13 @@
                   fontWeight: widget.fontWeight,
                   textAlign: widget.textAlign
                }"
+               class="items"
                @click="select(widget)"
                v-if="widget.type === 'Text'">{{widget.text}}</p>
             <input
                v-else-if="widget.type === 'Input'"
                @click="select(widget)"
+               class="items"
                :placeholder="widget.placeholder"
                :style="{
                   padding: widget.paddingX+'px '+widget.paddingY+'px',
@@ -38,6 +40,7 @@
             <div
                v-else-if="widget.type === 'Rounded'"
                @click="select(widget)"
+               class="items"
                :style="{
                   backgroundColor: background(widget),
                   padding: widget.paddingX+'px '+widget.paddingY+'px',
@@ -49,6 +52,7 @@
             <div
                v-else-if="widget.type === 'Squared'"
                @click="select(widget)"
+               class="items"
                :style="{
                   backgroundColor: background(widget),
                   padding: widget.paddingX+'px '+widget.paddingY+'px',
@@ -60,6 +64,7 @@
             <font-awesome-icon
                v-else-if="widget.type === 'Star'"
                @click="select(widget)"
+               class="items"
                :style="{
                   color: widget.color,
                   opacity: widget.isTransparent?0:1,
@@ -68,6 +73,7 @@
             />
             <button
                @click="select(widget)"
+               class="items"
                :style="{
                   backgroundColor: background(widget),
                   padding: widget.paddingX+'px '+widget.paddingY+'px',
@@ -177,5 +183,9 @@
       opacity: 0;
       position: absolute;
       transition: opacity 2s ease-in-out;;
+    }
+
+    .items {
+      box-sizing: border-box;
     }
  </style>
