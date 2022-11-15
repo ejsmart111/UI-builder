@@ -5,8 +5,8 @@
           <VueDragResize
             v-for="widget in widgets"
             :key="widget.id"
-            @resizing="resize($event, widget)"
-            @dragging="drag($event, widget)"
+            @resizing="resizeDrag($event, widget)"
+            @dragging="resizeDrag($event, widget)"
             :isActive="widget.id === selected.id"
             :w="widget.width"
             :h="widget.height"
@@ -111,8 +111,6 @@
     },
     data() {
        return {
-          dragOffsetX: null,
-          dragOffsetY: null,
           selected: {}
        }
     },
@@ -127,13 +125,11 @@
       }, 1000);
     },
     methods: {
-      resize(e,widget) {
-         widget.width = e.width
-         widget.height = e.height
-      },
-      drag(e, widget) {
+      resizeDrag(e,widget) {
          widget.x = e.left
          widget.y = e.top
+         widget.width = e.width
+         widget.height = e.height
       },
        select: function (widget) {
           this.selected = widget

@@ -134,7 +134,8 @@ export default {
    },
    methods: {
       change(e, param) {
-         this.$emit('change', {val: e.target.value, param})
+         const val = e.target['type'] === 'number' ? parseInt(e.target.value) : e.target['value']
+         this.$emit('change', {val, param})
       },
       remove: function () {
          this.$emit('remove', this.element.id)

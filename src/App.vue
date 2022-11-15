@@ -61,7 +61,7 @@ export default {
       selected: null,
       tabs: ['Properties', 'Arrangement'],
       drag: false,
-      activeTab: 'Properties'
+      activeTab: 'Properties',
     }
   },
   methods: {
@@ -71,6 +71,7 @@ export default {
     },
     change(params) {
       this.selected[params.param] = params.val
+      this.selected['x'] = this.selected['x'] + 0.1
     },
     passSelected(selected) {
       this.selected = selected
@@ -90,7 +91,7 @@ export default {
           height: 30,
           id,
           text: 'Custom Text',
-          color: 'black',
+          color: '#000000',
           size: 24,
           name: `Text ${id.substring(0,5)}`,
           fontWeight: 200,
@@ -106,7 +107,7 @@ export default {
           placeholder: 'Email',
           borderRadius: 3,
           height: 30,
-          border: '1px solid black',
+          border: '1px solid #000000',
           paddingX: 6,
           paddingY: 10,
           type: 'Input',
@@ -123,9 +124,9 @@ export default {
         width: 400,
         height: 400,
         borderRadius: kind === 'Rounded'?50:0,
-        background: 'red',
+        background: '#FF0000',
         isTransparent: false,
-        border: '3px solid black',
+        border: '3px solid #000000',
         type: kind === 'Rounded'?'Rounded':'Squared',
         id,
         name: `${kind} ${id.substring(0,5)}`,
@@ -141,7 +142,7 @@ export default {
         width: 60,
         height: 60,
         size: 50,
-        color: 'black',
+        color: '#000000',
         type: 'Star',
         id,
         name: `Star ${id.substring(0,5)}`,
@@ -152,15 +153,15 @@ export default {
       this.widgets.push({
         x: 100,
         y: 100,
-        width: 150,
-        border: '1px solid black',
+        w: 150,
+        border: '1px solid #000000',
         borderRadius: 5,
-        height: 40,
+        h: 40,
         size: 16,
         paddingX: 4,
         paddingY: 10,
-        background: 'black',
-        color: 'white',
+        background: '#000000',
+        color: '#FFFFFF',
         isTransparent: false,
         type: 'Button',
         id,
