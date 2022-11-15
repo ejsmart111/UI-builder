@@ -1,13 +1,12 @@
 const { defineConfig } = require('@vue/cli-service')
-const webpack = require('webpack')
-    // module.exports = defineConfig({
-    //   transpileDependencies: true
-    // })
-module.exports = {
-    chainWebpack: (config) => {
-        config.optimization.delete('splitChunks');
-        config
-            .plugin('limitSplitChunks')
-            .use(webpack.optimize.LimitChunkCountPlugin, [{ maxChunks: 1 }]);
-    }
-};
+module.exports = defineConfig({
+    transpileDependencies: true,
+    css: {
+        extract: false,
+    },
+    configureWebpack: {
+        optimization: {
+            splitChunks: false,
+        },
+    },
+})
