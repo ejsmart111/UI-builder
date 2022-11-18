@@ -13,6 +13,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.9",
     "core-js": "^3.8.3",
     "document-register-element": "^1.14.10",
+    "firebase": "^9.14.0",
     "vue": "^2.6.14",
     "vue-custom-element": "^3.3.0",
     "vue-drag-resize": "^1.5.4",

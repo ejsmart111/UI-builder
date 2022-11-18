@@ -13,7 +13,13 @@
     </div>
     <div class="main">
       <drop-zone @selected="passSelected" @remove="removeWidget" :widgets="widgets" />
-      <button @click="save" class="save">Save To Storage</button>
+      <button @click="save" class="save">
+        <span v-if="!saving">Save To Storage</span>
+        <span v-else>Saving <font-awesome-icon spin icon="fa-spinner" /></span>
+      </button>
+      <div v-if="snack" class="snack" :style="{background: getBackground}">
+        {{message}}
+      </div>
     </div>
     <div class="secondary">
       <div class="tabs">
@@ -47,6 +53,7 @@ import DropZone from './components/DropZone.vue';
 import PropExplorer from './components/PropExplorer.vue';
 import draggable from 'vuedraggable'
 import uiStore from './uiStore';
+import { getDatabase, child, set, ref, get } from 'firebase/database'
 
 export default {
   components: {
@@ -62,12 +69,36 @@ export default {
       tabs: ['Properties', 'Arrangement'],
       drag: false,
       activeTab: 'Properties',
+      saving: false,
+      snack: false,
+      state: 'none',
+      message: ''
+    }
+  },
+  computed: {
+    getBackground() {
+      if (this.state == 'success') return '#57d16e'
+      return '#f44e4e'
     }
   },
   methods: {
-    save() {
-      const widgets = JSON.stringify(this.widgets)
-      window.localStorage.setItem('WidgetStore', widgets)
+    async save() {
+      this.saving = true
+      const db = getDatabase()
+      try {
+        await set(ref(db, 'widgets'), this.widgets)
+        this.snack = true
+        this.state = 'success'
+        this.message = 'Template saved successfully'
+      } catch (err) {
+        this.snack = false
+        this.state = 'fail'
+        this.message = 'Sorry an error occured'
+      }
+      setTimeout(() => {
+        this.snack = false
+      }, 3000);
+      this.saving = false
     },
     change(params) {
       this.selected[params.param] = params.val
@@ -173,13 +204,19 @@ export default {
     uuid() {
       return Math.random().toString().replace("0.", "")
     },
+    loadWidgets() {
+      const db = ref(getDatabase())
+      get(child(db, 'widgets')).then(snap => {
+        if (snap.exists) {
+          this.widgets = snap.val()
+        } else {
+          this.widgets = uiStore
+        }
+      })
+    }
   },
   mounted() {
-    const local = window.localStorage.getItem('WidgetStore')
-    if (local)
-      this.widgets = JSON.parse(local)
-    else
-      this.widgets = uiStore
+    this.loadWidgets()
   }
 }
 
@@ -225,6 +262,15 @@ export default {
     top: 20px;
     padding: 4px 10px;
     position: absolute;
+  }
+  .snack {
+    bottom: 0;
+    left: 0;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 3px;
+    position: absolute;
+    width: 100%;
   }
   .arr {
     background: #f3f3f3;
