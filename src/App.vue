@@ -13,10 +13,13 @@
     </div>
     <div class="main">
       <drop-zone @selected="passSelected" @remove="removeWidget" :widgets="widgets" />
-      <button @click="save" class="save">
-        <span v-if="!saving">Save To Storage</span>
-        <span v-else>Saving <font-awesome-icon spin icon="fa-spinner" /></span>
-      </button>
+      <div class="top">
+        <button @click="save" class="save">
+          <span v-if="!saving">Save To Storage</span>
+          <span v-else>Saving <font-awesome-icon spin icon="fa-spinner" /></span>
+        </button>
+        <pre class="link" @click="copy">Script Link: {{link}}</pre>
+      </div>
       <div v-if="snack" class="snack" :style="{background: getBackground}">
         {{message}}
       </div>
@@ -72,7 +75,8 @@ export default {
       saving: false,
       snack: false,
       state: 'none',
-      message: ''
+      message: '',
+      link: 'https://popup-c2ba0.web.app/js/app.js'
     }
   },
   computed: {
@@ -82,6 +86,21 @@ export default {
     }
   },
   methods: {
+    copy() {
+      navigator.clipboard.writeText(this.link)
+      try {
+        this.snack = true
+        this.state = 'success'
+        this.message = 'Link has been copied'
+      } catch (err) {
+        this.snack = false
+        this.state = 'fail'
+        this.message = 'Sorry an error occured'
+      }
+      setTimeout(() => {
+        this.snack = false
+      }, 3000);
+    },
     async save() {
       this.saving = true
       const db = getDatabase()
@@ -224,7 +243,7 @@ export default {
 
 <style scoped>
   .main-app {
-    display: flex;
+    display: none;
   }
   .secondary {
     box-sizing: border-box;
@@ -258,10 +277,19 @@ export default {
     border-radius: 5px;
     color: #6708eb;
     cursor: pointer;
-    left: 280px;
-    top: 20px;
-    padding: 4px 10px;
+    padding: 1px 10px;
+    height: 30px;
+    margin-top: 10px
+  }
+  .link {
+    cursor: pointer;
+  }
+  .top {
+    display: flex;
     position: absolute;
+    left: 280px;
+    gap: 10px;
+    top: 20px;
   }
   .snack {
     bottom: 0;
